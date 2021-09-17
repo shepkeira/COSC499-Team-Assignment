@@ -43,10 +43,10 @@ def intro():
     adventures += success #if the protag is successful they get another adventure
     while True:
         say("Would you like to go on an adventure?")
-        choice = input("(y/n)")
-        if choice == "y" or "Y":
+        choice = input("(y/n) ")
+        if (choice == "y") or (choice == "Y"):
             success = pick_adventure(get_options(adventures))
-            if adventures < ADVENTURE_FUNCTIONS.count():
+            if adventures < len(ADVENTURE_FUNCTIONS):
                 adventures += success
         else:
             break
@@ -91,19 +91,22 @@ def character_creation():
 # this function takes in no inputs
 # this function returns a list of pronouns e.g.['he', 'him', 'his']
 def check_pronouns():
+    say("""
+    Brave adventurer, what are your pronouns?
+    """)
     while True:
-        say("""
-        Brave adventurer, what are your pronouns?
-        """)
         say("(Please format as follows: he/him/his)")
-        pronouns = input("Pronouns: ")
-        subject_pronoun, object_pronoun, possessive_pronoun = pronouns.split('/')
-        say("Does this sound correct? \'" + subject_pronoun +" has " + possessive_pronoun + " sword with " + object_pronoun + "\'")
-        correct = input("(y/n) ")
-        if correct == "y":
-            return [subject_pronoun, object_pronoun, possessive_pronoun]
-        else:
-            say("My mistake, let us try again\n")
+        try:
+            pronouns = input("Pronouns: ")
+            subject_pronoun, object_pronoun, possessive_pronoun = pronouns.split('/')
+            say("Does this sound correct? \'" + subject_pronoun +" has " + possessive_pronoun + " sword with " + object_pronoun + "\'")
+            correct = input("(y/n) ")
+            if correct == "y":
+                return [subject_pronoun, object_pronoun, possessive_pronoun]
+            else:
+                say("My mistake, let us try again\n")
+        except ValueError:
+            say("Please make sure your pronouns are seperated by / and that you provide all 3 versions.")
 
 # this function takes in no inputs
 # this fucntion returns the name of the protag
