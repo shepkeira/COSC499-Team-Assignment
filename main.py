@@ -1,5 +1,17 @@
-from protagonist import Protagonist
 from adventurelib import *
+from protagonist import Protagonist
+from random import random
+import sys
+import time
+
+
+# Pseudo-typing method, can use this instead of say(s) as desired
+def type(s):
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(random()*0.05)
+    print("")
 
 # TODO replace the print statement with a function leading to your adventure
 def adv_a():
