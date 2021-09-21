@@ -3,10 +3,14 @@ import unittest
 from unittest.mock import patch
 
 from main import *
+import protagonist
 
 class TestMain(unittest.TestCase):
     def test_get_options_3(self):
-        options = get_options(3)
+        protag = Protagonist("Alex", ["she", "her", "her"])
+        protag.add_adventure("A")
+        protag.add_adventure("B")
+        options = get_options(protag)
         expected_options = ADVENTURES = {
             "A": "Adventure A",
             "B": "Adventure B",
@@ -15,7 +19,8 @@ class TestMain(unittest.TestCase):
         }
         self.assertEqual(options, expected_options)
     def test_get_options_1(self):
-        options = get_options(1)
+        protag = Protagonist("Alex", ["she", "her", "her"])
+        options = get_options(protag)
         expected_options = ADVENTURES = {
             "A": "Adventure A",
             "E": "Exit"
