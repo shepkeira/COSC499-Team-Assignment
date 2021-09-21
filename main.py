@@ -1,9 +1,10 @@
-from protagonist import Protagonist
 from adventurelib import *
+from protagonist import Protagonist
+from adventure_a import adventure_a
 
 # TODO replace the print statement with a function leading to your adventure
 def adv_a():
-    print("Adventure A")
+    adventure_a()
     return 1
 
 def adv_b():
