@@ -4,15 +4,15 @@ from adventurelib import *
 # TODO replace the print statement with a function leading to your adventure
 def adv_a():
     print("Adventure A")
-    return 1
+    return "Adventure A"
 
 def adv_b():
     print("Adventure B")
-    return 1
+    return "Adventure B"
 
 def adv_c():
     print("Adventure C")
-    return 1
+    return "Adventure C"
 
 #The Different Advenetures and their names
 ADVENTURES = {
@@ -39,22 +39,26 @@ def intro():
     protag = character_creation()
     say("Let us begin!")
     # let our user pick their adventure
-    success = pick_adventure(get_options(adventures))
-    adventures += success #if the protag is successful they get another adventure
+    success = pick_adventure(get_options(protag))
+    #if protag is successful add the name of the adventure to your list
+    protag.add_adventure(success)
     while True:
         say("Would you like to go on an adventure?")
         choice = input("(y/n) ")
         if (choice == "y") or (choice == "Y"):
-            success = pick_adventure(get_options(adventures))
-            if adventures < len(ADVENTURE_FUNCTIONS):
-                adventures += success
+            success = pick_adventure(get_options(protag))
+            if len(protag.completed_adventures) < len(ADVENTURE_FUNCTIONS):
+                #if protag is successful add the name of the adventure to your list
+                protag.add_adventure(success)
         else:
             break
     say("It has been great adventuring with you, " + protag.name)
 
-#this function takes in a number of adventures avaible to the user
+#this function takes in the protag object
 #returns a dictionary of different adventures they can go on
-def get_options(adventures):
+def get_options(protag):
+    #check how many adventures the protag has gone on
+    adventures = len(protag.completed_adventures) + 1
     available_adventures = {}
     all_adventures = list(ADVENTURES.keys())[0:adventures]
     for adventure in all_adventures:
@@ -67,7 +71,6 @@ def get_options(adventures):
 def pick_adventure(options):
     say("Pick an adventure below by entering the letter associated")
     # To Do Replace Adventure X with the correct name of the adventure
-    print(options)
     while True:
         for key,adventure_name in options.items():
             say(key + ':' + adventure_name)
