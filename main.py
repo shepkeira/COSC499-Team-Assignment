@@ -15,7 +15,7 @@ def adv_c():
     print("Adventure C")
     return 1
 
-#The Different Advenetures and their names
+#The Different Adventures and their names
 ADVENTURES = {
     "A": "Adventure A",
     "B": "Adventure B",
@@ -31,7 +31,7 @@ ADVENTURE_FUNCTIONS = {
 
 #This is the primary function that you start at when you begin the game
 def intro():
-    adventures = 1 #we start with only 1 adventure availible
+    adventures = 1 #we start with only 1 adventure available
     say("""
     Welcome brave adventurer! You have 3 different adventures to depart on. 
     The adventures must be completed in order! To begin we need to know about you!
@@ -53,7 +53,7 @@ def intro():
             break
     say("It has been great adventuring with you, " + protag.name)
 
-#this function takes in a number of adventures avaible to the user
+#this function takes in a number of adventures available to the user
 #returns a dictionary of different adventures they can go on
 def get_options(adventures):
     available_adventures = {}
