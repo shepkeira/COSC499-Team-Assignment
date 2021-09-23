@@ -11,9 +11,8 @@ def type(s, t):
         time.sleep(random() * t)
     print("")
 
+
 # Default speed type
-
-
 def default_type(s):
     for c in s:
         sys.stdout.write(c)
