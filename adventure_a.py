@@ -19,7 +19,7 @@ current_room = laboratory = Room("""
     On the West side is a closet.
 """)
 laboratory.how_fire = False # Event: fire
-omelette = Item("omelette", "food") # Omolette does not start in laboratory, it only appears later
+omelette = Item("omelette", "food") # Omelette does not start in laboratory, it only appears later
 laboratory.items = Bag()
 
 hallway = laboratory.north = Room("""
@@ -173,12 +173,13 @@ def eat_omelette(): # Note that omelettes will be the only food in this adventur
 @when("use hanger on machine")
 @when("use coat hanger on food machine")
 @when("start fire with clothes hanger and food machine")
+@when("start a fire with the clothes hanger and the food machine")
 def fire():
     # To start the fire, the coathanger needs to be in the player's inventory
     if inventory.find("coat hanger") and laboratory.how_fire is True:
         say("""
             Sparks fly in all directions. You cover your eyes and take a step back in recoil.
-            Between the lights" flickering you see flames and a plume of smoke rise right underneath the blinking white dome on the ceiling.
+            Between the lights' flickering you see flames and a plume of smoke rise right underneath the blinking white dome on the ceiling.
             Barely a second later, alarms are blairing, and red lights are flashing in the hallway.
             Your heart sinks for a moment thinking that this was a failure, that you might die in this room.
             Just then, the door to the hallway robotically slides open.
@@ -194,6 +195,7 @@ def fire():
 @when("north", context="fire")
 @when("go through door", context="fire")
 @when("run through door", context="fire")
+@when("leave through door", context="fire")
 def fire_door():
     global current_room
     if current_room == laboratory:
