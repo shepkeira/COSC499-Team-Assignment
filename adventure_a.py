@@ -1,6 +1,7 @@
 from adventurelib import *
 from protagonist import Protagonist
 from random import random
+import time
 
 # Setup
 inventory = Bag()
@@ -75,11 +76,6 @@ def adventure_a(p):
         start()
     except Exception:
         return
-
-# Test
-@when("test")
-def test():
-    say(protag.name + " " + protag.subject_pronoun + " " + protag.object_pronoun + " " + protag.possessive_pronoun)
 
 # Main game functions, in mostly chronological order
 @when("window")
@@ -326,6 +322,7 @@ def end_game():
     You're slowly spinning, and as you make a half rotation you begin to make out another figure. Its a space-station.
     The one you were just jettisoned from. Inscribed on the side in red paint is "Asunta II."
     """)
+    time.sleep(2)
     raise Exception
 
 
@@ -408,6 +405,12 @@ def exit_game():
 @when("leave")
 def leave():
     say("If only it were that easy")
+
+@when("break window")
+@when("jump through window")
+@when("jump out window")
+def break_window():
+    say("You repeatedly hurl yourself against the window with no luck.")
 
 # For debugging. Start adventure from this file without having to enter from main.py
 # adventure_a()
