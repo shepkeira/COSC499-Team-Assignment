@@ -2,10 +2,12 @@ from adventurelib import *
 from protagonist import Protagonist
 from adventure_a import adventure_a
 
+protag = None
+
 # TODO replace the print statement with a function leading to your adventure
-def adv_a():
-    adventure_a()
-    return 1
+def adv_a(protag):
+    adventure_a(protag)
+    return "Adventure A"
 
 
 def adv_b():
@@ -38,6 +40,7 @@ def intro():
     The adventures must be completed in order! To begin we need to know about you!
     """)
     # we create a character with a name and pronouns
+    global protag
     protag = character_creation()
     say("Let us begin!")
     # let our user pick their adventure
@@ -69,7 +72,7 @@ def get_options(protag):
     return available_adventures
 
 # this function takes in the adventures our user can go on 
-# this function returns 1 on a sucessful adventure and 0  on a failed adventure or exit
+# this function returns 1 on a successful adventure and 0  on a failed adventure or exit
 def pick_adventure(options):
     say("Pick an adventure below by entering the letter associated")
     # To Do Replace Adventure X with the correct name of the adventure
@@ -78,7 +81,7 @@ def pick_adventure(options):
             say(key + ':' + adventure_name)
         choice = input()
         if choice in ADVENTURE_FUNCTIONS.keys():
-            return ADVENTURE_FUNCTIONS[choice]()
+            return ADVENTURE_FUNCTIONS[choice](protag)
         elif choice == "E":
             return 0
         else:
@@ -90,6 +93,7 @@ def character_creation():
     name = check_name()
     say("You say your name is " + name + " ?\n This is the name of the adventurer of legend!")
     pronouns = check_pronouns()
+    global protag
     protag = Protagonist(name, pronouns)
     return protag
 

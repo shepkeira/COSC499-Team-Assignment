@@ -1,15 +1,14 @@
 from adventurelib import *
 from protagonist import Protagonist
 from random import random
-import sys
-import time
 
 # Setup
 inventory = Bag()
 Room.items = Bag()
 Room.locked = False
 Item.desc = ""
-    
+protag = None
+
 # Rooms
 current_room = laboratory = Room("""
     Several bright lights are on, revealing a clean but untidy living area. Its sparse and reminds you of a laboratory more than a bedroom.
@@ -58,7 +57,10 @@ common_room = hallway.west = Room("""
 quarters_hall = common_room.south = Room("This is a bad idea")
 
 # Start of the game! This is the entrypoint from main.py
-def adventure_a():
+def adventure_a(p):
+    global protag
+    protag = p
+
     say("Adventure A: Asunta II")
     
     # Commenting out sleeps to speed up debugging
@@ -67,9 +69,17 @@ def adventure_a():
     # time.sleep(1)
 
     look()
-    start()
-    # TODO Figure out how to return to menu
-    return
+
+    # Break game loop by raising exception, which will return us back to the main menu
+    try:
+        start()
+    except Exception:
+        return
+
+# Test
+@when("test")
+def test():
+    say(protag.name + " " + protag.subject_pronoun + " " + protag.object_pronoun + " " + protag.possessive_pronoun)
 
 # Main game functions, in mostly chronological order
 @when("window")
@@ -174,6 +184,8 @@ def eat_omelette(): # Note that omelettes will be the only food in this adventur
 @when("use coat hanger on food machine")
 @when("start fire with clothes hanger and food machine")
 @when("start a fire with the clothes hanger and the food machine")
+@when("put coat hanger in machine")
+@when("put coat hanger in food machine")
 def fire():
     # To start the fire, the coathanger needs to be in the player's inventory
     if inventory.find("coat hanger") and laboratory.how_fire is True:
@@ -215,11 +227,36 @@ def fire_look():
     elif current_room == laboratory:
         say("Sirens are blaring and the door to the hallway is now open")
 
+@when("look at terminal", context="fire")
+@when("look at computer", context="fire")
+@when("open terminal", context="fire")
+@when("open computer", context="fire")
+@when("look left", context="fire")
+@when("use computer", context="fire")
+def computer():
+    say("""
+    The keyboard folds down showing you the wall-mounted screen, still logged in.
+    There is a document open on the screen:
+    """)
+    say("""
+    Research Journal - day 3650
+    10 years today... And nothing. No evidence of our hypotheses coming to fruition.
+    Everything has been for nothing. Lives wasted because of my ignorance.
+    """ + protag.name + """ turns 23 today. The least I can say is that""" + Protagonist.possessive_pronoun + """
+    had a better life here than""" + Protagonist.subject_pronoun + """ would have had on Earth.
+    Was it right that I took""" + Protagonist.subject_pronoun + """? Who's to say.
+    How could this be our destiny? How could this be what came of things?
+    There's no use in trying to explain myself to""" + Protagonist.subject_pronoun + """.
+    We'll run out of food before we run out of recyclable air. At least I can still re-write these
+    results.
+    """)
+
 @when("go down hallway", context="fire")
 @when("walk down hallway", context="fire")
 @when("proceed down hallway")
 @when("go north", context="fire")
 @when("keep going", context="fire")
+@when("keep going down hallway", context="fire")
 def round_corner():
     if current_room == hallway:
         go("west")
@@ -227,21 +264,60 @@ def round_corner():
         set_context("danger")
 
 @when("go south", context="danger")
+@when("run", context="danger")
 @when("run to quarters", context="danger")
 @when("quarter", context="danger")
 @when("south", context="danger")
 def run_into_stranger():
     say("""
     In a confused panic, you run directly towards where you heard the footsteps coming from.
-    You meet the stranger head-on, and for a second you both stop to stare at each-other. He is a tall, scraggly-bearded man 
-    wearing a blue jumpsuit similar to the one that you woke up in. His panic turns to confusion, then quickly to focus.
-    He walks towards you feigning confidence. You stand in shock as he pulls a black stick from behind his back.
-    At this point you turn to try to run, but a tremendous shock fills your body and before you hit the ground you black out.
+    """)
+    end_game()
+
+@when("hide", context="danger")
+@when("find a spot to hide", context="danger")
+@when("look for a spot to hide", context="danger")
+@when("look for a hiding spot", context="danger")
+@when("hide in common room", context="danger")
+@when("hide under table", context="danger")
+def hide():
+    say("""
+    You look for a spot to hide in the common room.
+    There aren't a lot of good options, so in a panic you crouch behind the table in the middle of the room. At the very least
+    he won't see you immediately and maybe you can sneak past.
+    The pounding footsteps grow closer and louder. Its impossible to control you fast and shallow breathing, but you close your eyes
+    in terror of what is about to happen.
+    There's nowhere to hide now, he's going to find you. You hear the footsteps walk past the table you are under.
+    You decide to make a break for it down towards the quarters, but he immediately moves to intercept you.
+    """)
+    end_game()
+
+@when("fight", context="danger")
+@when("fight the stranger", context="danger")
+def fight():
+    say("""
+    Its fight or flight, and you choose fight.
+    """)
+    end_game()
+
+@when("go back the way i came", context="danger")
+@when("retreat", context="danger")
+@when("go back", context="danger")
+@when("turn around", context="danger")
+def retreat():
+    say("""
+    You turn around and go back towards the laboratory.
+    About halfway down the hallway, the door to the lab slams shut in front of you.
+    Like a deer in headlights you turn back around to meet your fate.
     """)
     end_game()
 
 def end_game():
     say("""
+    You meet the stranger head-on, and for a second you both stop to stare at each-other. He is a tall, scraggly-bearded man 
+    wearing a blue jumpsuit similar to the one that you woke up in. His panic turns to confusion, then quickly to focus.
+    He walks towards you feigning confidence. You stand in shock as he pulls a black stick from behind his back.
+    At this point you turn to try to run, but a tremendous shock fills your body and before you hit the ground you black out.
     Again you awake, but this time even more than before it feels like a dream.
     You are floating, not able to move any part of your body, and your vision little more than a fuzzy haze.
     It can be discerned that you have been shoved into an extremely tight suit, but you aren't standing or laying down.
@@ -250,7 +326,7 @@ def end_game():
     You're slowly spinning, and as you make a half rotation you begin to make out another figure. Its a space-station.
     The one you were just jettisoned from. Inscribed on the side in red paint is "Asunta II."
     """)
-    return
+    raise Exception
 
 
 # Common Functions
@@ -320,6 +396,13 @@ def show_inventory():
     say("You have:")
     for thing in inventory:
         say(thing)
+
+
+# Exit function to return back to main menu
+@when("exit")
+def exit_game():
+    raise Exception
+
 
 # Comedic functions
 @when("leave")
