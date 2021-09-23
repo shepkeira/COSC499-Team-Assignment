@@ -1,6 +1,6 @@
 from adventurelib import *
 from protagonist import Protagonist
-from adventure_a import adventure_a
+from adv_a import adventure_a
 
 protag = None
 

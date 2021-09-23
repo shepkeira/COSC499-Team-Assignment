@@ -1,4 +1,6 @@
 from adventurelib import *
+from colors import colors
+import dynamic_type
 from protagonist import Protagonist
 from random import random
 import time
@@ -15,7 +17,7 @@ current_room = laboratory = Room("""
     Several bright lights are on, revealing a clean but untidy living area. Its sparse and reminds you of a laboratory more than a bedroom.
     You are surrounded by white, metal walls on 7 of 8 sides. The bed is against the South side, and faces a table in the center with 2 chairs.
     A bulkhead is across the table from you on the North side of the room, containing what looks like an electronic door.
-    The East wall contains a window. It"s pitch black outside, and you can see stars.
+    The East wall contains a window. It's pitch black outside, and you can see stars.
     On the West side is a closet.
 """)
 laboratory.how_fire = False # Event: fire
@@ -62,12 +64,11 @@ def adventure_a(p):
     global protag
     protag = p
 
-    say("Adventure A: Asunta II")
+    dynamic_type.type("Adventure A: Asunta", 0.1)
     
     # Commenting out sleeps to speed up debugging
-    # time.sleep(1)
+    time.sleep(1)
     print("You wake up in an unfamiliar room with a hazy mind, and no idea how you got here.")
-    # time.sleep(1)
 
     look()
 
@@ -141,7 +142,11 @@ def look_through_door():
         Looking through the glass on the door you see the figure using a wall-mounted computer console in the hallway. They"re typing
         notes below a picture of what looks like your room. Their face is that of someone who is desparate, and nearly defeated.
         His gaze meets yours. He smiles slightly and presses a button on the keyboard. A voice echos in your room, taking you by shock.
-        "So you"re still with us." The figure spoke rhetorically.
+        """)
+        time.sleep(15)
+        dynamic_type.default_type(colors.BOLD + "So you're still with us." + colors.ENDC)
+        time.sleep(1)
+        say("""The figure spoke rhetorically.
         He folds the keyboard into the wall and takes off at a stroll North down the hallway.
     
         You are startled by a whirring behind you. A machine is steaming and buzzing on the table in the middle of the room. Out pops 
@@ -234,17 +239,17 @@ def computer():
     The keyboard folds down showing you the wall-mounted screen, still logged in.
     There is a document open on the screen:
     """)
-    say("""
+    dynamic_type.default_type("""
     Research Journal - day 3650
     10 years today... And nothing. No evidence of our hypotheses coming to fruition.
     Everything has been for nothing. Lives wasted because of my ignorance.
-    """ + protag.name + """ turns 23 today. The least I can say is that""" + Protagonist.possessive_pronoun + """
-    had a better life here than""" + Protagonist.subject_pronoun + """ would have had on Earth.
-    Was it right that I took""" + Protagonist.subject_pronoun + """? Who's to say.
+    """ + protag.name + """ turns 23 today. The least I can say is that """ + protag.possessive_pronoun + """
+    had a better life here than """ + protag.subject_pronoun + """ would have had on Earth.
+    Was it right that I took """ + protag.subject_pronoun + """? Who's to say.
     How could this be our destiny? How could this be what came of things?
-    There's no use in trying to explain myself to""" + Protagonist.subject_pronoun + """.
-    We'll run out of food before we run out of recyclable air. At least I can still re-write these
-    results.
+    There's no use in trying to explain myself to """ + protag.subject_pronoun + """.
+    We'll run out of food before we run out of recyclable air. At least I can still 
+    re-write these results.
     """)
 
 @when("go down hallway", context="fire")
@@ -253,6 +258,7 @@ def computer():
 @when("go north", context="fire")
 @when("keep going", context="fire")
 @when("keep going down hallway", context="fire")
+@when("continue down hallway", context="fire")
 def round_corner():
     if current_room == hallway:
         go("west")
@@ -320,8 +326,9 @@ def end_game():
     Glass fogs in front of your face and as it clears your vision does too. Its the same scene as from the window in the hallway.
     Earth is sitting however many thousands of miles away, as magnificent as it is confusing.
     You're slowly spinning, and as you make a half rotation you begin to make out another figure. Its a space-station.
-    The one you were just jettisoned from. Inscribed on the side in red paint is "Asunta II."
+    The one you were just jettisoned from. Inscribed on the side in red paint is 
     """)
+    say(colors.RED + "Asunta" + colors.ENDC)
     time.sleep(2)
     raise Exception
 
