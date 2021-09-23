@@ -139,7 +139,7 @@ def see_stranger():
 def look_through_door():
     if current_room == laboratory and hallway.stranger is True:
         say("""
-        Looking through the glass on the door you see the figure using a wall-mounted computer console in the hallway. They"re typing
+        Looking through the glass on the door you see the figure using a wall-mounted computer console in the hallway. They're typing
         notes below a picture of what looks like your room. Their face is that of someone who is desparate, and nearly defeated.
         His gaze meets yours. He smiles slightly and presses a button on the keyboard. A voice echos in your room, taking you by shock.
         """)
@@ -243,11 +243,11 @@ def computer():
     Research Journal - day 3650
     10 years today... And nothing. No evidence of our hypotheses coming to fruition.
     Everything has been for nothing. Lives wasted because of my ignorance.
-    """ + protag.name + """ turns 23 today. The least I can say is that """ + protag.possessive_pronoun + """
+    """ + protag.name + """ turns 23 today. The least I can say is that """ + protag.subject_pronoun + """
     had a better life here than """ + protag.subject_pronoun + """ would have had on Earth.
-    Was it right that I took """ + protag.subject_pronoun + """? Who's to say.
+    Was it right that I took """ + protag.object_pronoun + """? Who's to say.
     How could this be our destiny? How could this be what came of things?
-    There's no use in trying to explain myself to """ + protag.subject_pronoun + """.
+    There's no use in trying to explain myself to """ + protag.object_pronoun + """.
     We'll run out of food before we run out of recyclable air. At least I can still 
     re-write these results.
     """)
