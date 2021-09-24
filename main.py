@@ -1,31 +1,21 @@
 from adventurelib import *
 from protagonist import Protagonist
 
+from adv_a import adventure_a
 from adv_c import adventure_c
 
 
-from adv_a import adventure_a
-
 protag = None
-
 
 # TODO replace the print statement with a function leading to your adventure
 def adv_a(protag):
     adventure_a(protag)
     return "Adventure A"
-
-
 def adv_b():
     print("Adventure B")
     return "Adventure B"
-
-
 def adv_c(protag):
     adventure_c(protag)
-
-
-    
-
     return "Adventure C"
 
 #The Different Adventures and their names
@@ -67,7 +57,7 @@ def intro():
             if len(protag.completed_adventures) < len(ADVENTURE_FUNCTIONS):
 
                 #if protag is successful add the name of the adventure to your list
- development
+ 
                 protag.add_adventure(success)
         else:
             break
@@ -77,10 +67,8 @@ def intro():
 #returns a dictionary of different adventures they can go on
 def get_options(protag):
 
-
     #check how many adventures the protag has gone on
     adventures = len(protag.completed_adventures) + 1
- development
     available_adventures = {}
     all_adventures = list(ADVENTURES.keys())[0:adventures]
     for adventure in all_adventures:
