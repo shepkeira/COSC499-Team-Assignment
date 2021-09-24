@@ -2,6 +2,7 @@ from adventurelib import *
 from protagonist import Protagonist
 
 from adv_a import adventure_a
+from adv_b import start_adv_b
 from adv_c import adventure_c
 
 
@@ -9,13 +10,13 @@ protag = None
 
 # TODO replace the print statement with a function leading to your adventure
 def adv_a(protag):
-    adventure_a(protag)
+    #adventure_a(protag)
     return "Adventure A"
-def adv_b():
-    print("Adventure B")
+def adv_b(protag):
+    start_adv_b(protag)
     return "Adventure B"
 def adv_c(protag):
-    adventure_c(protag)
+    #adventure_c(protag)
     return "Adventure C"
 
 #The Different Adventures and their names
