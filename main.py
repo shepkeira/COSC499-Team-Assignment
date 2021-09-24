@@ -1,22 +1,34 @@
 from adventurelib import *
 from protagonist import Protagonist
+
 from adv_c import adventure_c
 
 
+from adv_a import adventure_a
+
+protag = None
+
+
 # TODO replace the print statement with a function leading to your adventure
-def adv_a():
-    print("Adventure A")
-    return 1
+def adv_a(protag):
+    adventure_a(protag)
+    return "Adventure A"
+
 
 def adv_b():
     print("Adventure B")
-    return 1
+    return "Adventure B"
+
 
 def adv_c(protag):
     adventure_c(protag)
+
+
+    
+
     return "Adventure C"
 
-#The Different Advenetures and their names
+#The Different Adventures and their names
 ADVENTURES = {
     "A": "Adventure A",
     "B": "Adventure B",
@@ -32,7 +44,7 @@ ADVENTURE_FUNCTIONS = {
 
 #This is the primary function that you start at when you begin the game
 def intro():
-    adventures = 1 #we start with only 1 adventure availible
+    adventures = 1 #we start with only 1 adventure available
     say("""
     Welcome brave adventurer! You have 3 different adventures to depart on. 
     The adventures must be completed in order! To begin we need to know about you!
@@ -43,22 +55,32 @@ def intro():
     say("Let us begin!")
     # let our user pick their adventure
     success = pick_adventure(get_options(protag))
-    protag.add_adventure(success) #if the protag is successful they get another adventure
+
+    #if protag is successful add the name of the adventure to your list
+    protag.add_adventure(success)
+
     while True:
         say("Would you like to go on an adventure?")
         choice = input("(y/n) ")
         if (choice == "y") or (choice == "Y"):
             success = pick_adventure(get_options(protag))
             if len(protag.completed_adventures) < len(ADVENTURE_FUNCTIONS):
+
+                #if protag is successful add the name of the adventure to your list
+ development
                 protag.add_adventure(success)
         else:
             break
     say("It has been great adventuring with you, " + protag.name)
 
-#this function takes in a number of adventures avaible to the user
+#this function takes in a number of adventures available to the user
 #returns a dictionary of different adventures they can go on
 def get_options(protag):
-    adventures = len(protag.completed_adventures) +1
+
+
+    #check how many adventures the protag has gone on
+    adventures = len(protag.completed_adventures) + 1
+ development
     available_adventures = {}
     all_adventures = list(ADVENTURES.keys())[0:adventures]
     for adventure in all_adventures:
@@ -67,11 +89,10 @@ def get_options(protag):
     return available_adventures
 
 # this function takes in the adventures our user can go on 
-# this function returns 1 on a sucessful adventure and 0  on a failed adventure or exit
+# this function returns 1 on a successful adventure and 0  on a failed adventure or exit
 def pick_adventure(options):
     say("Pick an adventure below by entering the letter associated")
     # To Do Replace Adventure X with the correct name of the adventure
-    print(options)
     while True:
         for key,adventure_name in options.items():
             say(key + ':' + adventure_name)
@@ -114,7 +135,7 @@ def check_pronouns():
             say("Please make sure your pronouns are seperated by / and that you provide all 3 versions.")
 
 # this function takes in no inputs
-# this fucntion returns the name of the protag
+# this function returns the name of the protag
 def check_name():
     while True:
         say("""
