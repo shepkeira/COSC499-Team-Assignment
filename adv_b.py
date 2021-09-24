@@ -26,7 +26,7 @@ def bad_context():
 def start_adv_b(p):
     global protag
     protag = p
-    type("Adventure B: Barren Wastes\n", 0.1)
+    type("Adventure B: Bringing Them Down", 0.1)
     time.sleep(1)
     say("""You wake up on a chilly December morning. You don't bother getting out of bed for some time.\n""")
     print("\n")
