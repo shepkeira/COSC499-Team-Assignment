@@ -13,7 +13,7 @@ RoomDavid = Room("""Brave Worrior, Your name is David.
     Now you are 19 years old and here is a big news!! You are one of the triplets! 
     You have two other identical brothers.""")
 
-RooomRobert = Room("""Brave Worrior, Your name is Robert.
+RoomRobert = Room("""Brave Worrior, Your name is Robert.
   You have been apopted by upper middle class. Your father is a doctor but he was busy with his work while you growing up. 
   Now you are 19 years old. You have got some mental health issue and got into some troubles. 
   But here is the big news!. You are one of the triplests! You have two other identical brothers""")
@@ -24,8 +24,6 @@ RoomEdward = Room("""Brave Worrior, Your name is Edward.You got adopted by a mid
 
 RoomTriplets = Room("""You are having the best time of your life. You decided to open the resuaurant called Triplets with your brothers, Robert and Edward!
   The triplets are getting so much media attention it is like you are semi-celebs and you made a million in the first year!! As time goes on, they strugggled with their differences and Robert decided to leave the restauraurant several years after.""")
-
-print("To start the game, please type begin")
 
 @when("begin")
 def begin():
@@ -117,13 +115,12 @@ def game_over(reason):
     print("Type 'exit' to exit the game, Thank you!!!")
 
 @when("exit")
-def exit():
- say("exiting the game")
- keyboard = Controller()
- keyboard.press(Key.ctrl)
- keyboard.press('z')
- keyboard.release(Key.ctrl)
- keyboard.release('z')
- keyboard.press(Key.enter) 
+def exit_game():
+    raise Exception
 
-start()
+def adventure_c(protag):
+  print("To start the game, please type begin")
+  try:
+    start()
+  except Exception:
+      return
