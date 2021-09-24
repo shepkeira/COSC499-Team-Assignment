@@ -1,6 +1,9 @@
 from adventurelib import *
 from protagonist import Protagonist
+
 from adv_a import adventure_a
+from adv_c import adventure_c
+
 
 protag = None
 
@@ -8,14 +11,11 @@ protag = None
 def adv_a(protag):
     adventure_a(protag)
     return "Adventure A"
-
-
 def adv_b():
     print("Adventure B")
     return "Adventure B"
-
-def adv_c():
-    print("Adventure C")
+def adv_c(protag):
+    adventure_c(protag)
     return "Adventure C"
 
 #The Different Adventures and their names
@@ -45,15 +45,19 @@ def intro():
     say("Let us begin!")
     # let our user pick their adventure
     success = pick_adventure(get_options(protag))
+
     #if protag is successful add the name of the adventure to your list
     protag.add_adventure(success)
+
     while True:
         say("Would you like to go on an adventure?")
         choice = input("(y/n) ")
         if (choice == "y") or (choice == "Y"):
             success = pick_adventure(get_options(protag))
             if len(protag.completed_adventures) < len(ADVENTURE_FUNCTIONS):
+
                 #if protag is successful add the name of the adventure to your list
+ 
                 protag.add_adventure(success)
         else:
             break
@@ -62,6 +66,7 @@ def intro():
 #this function takes in a number of adventures available to the user
 #returns a dictionary of different adventures they can go on
 def get_options(protag):
+
     #check how many adventures the protag has gone on
     adventures = len(protag.completed_adventures) + 1
     available_adventures = {}
